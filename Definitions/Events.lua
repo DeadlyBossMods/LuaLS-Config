@@ -1,0 +1,133 @@
+-- Events used by DBM in addition to normal events:
+-- combat log sub-events and _UNFILTERED suffixes for some spammy events.
+---@meta
+
+-- From COMBATLOG_EVENT_LIST global
+---@alias CombatlogEvent
+---|"ENVIRONMENTAL_DAMAGE"
+---|"SWING_DAMAGE"
+---|"SWING_MISSED"
+---|"RANGE_DAMAGE"
+---|"RANGE_MISSED"
+---|"SPELL_CAST_START"
+---|"SPELL_CAST_SUCCESS"
+---|"SPELL_CAST_FAILED"
+---|"SPELL_MISSED"
+---|"SPELL_DAMAGE"
+---|"SPELL_HEAL"
+---|"SPELL_ENERGIZE"
+---|"SPELL_DRAIN"
+---|"SPELL_LEECH"
+---|"SPELL_SUMMON"
+---|"SPELL_RESURRECT"
+---|"SPELL_CREATE"
+---|"SPELL_INSTAKILL"
+---|"SPELL_INTERRUPT"
+---|"SPELL_EXTRA_ATTACKS"
+---|"SPELL_DURABILITY_DAMAGE"
+---|"SPELL_DURABILITY_DAMAGE_ALL"
+---|"SPELL_AURA_APPLIED"
+---|"SPELL_AURA_APPLIED_DOSE"
+---|"SPELL_AURA_REMOVED"
+---|"SPELL_AURA_REMOVED_DOSE"
+---|"SPELL_AURA_BROKEN"
+---|"SPELL_AURA_BROKEN_SPELL"
+---|"SPELL_AURA_REFRESH"
+---|"SPELL_DISPEL"
+---|"SPELL_STOLEN"
+---|"ENCHANT_APPLIED"
+---|"ENCHANT_REMOVED"
+---|"SPELL_PERIODIC_MISSED"
+---|"SPELL_PERIODIC_DAMAGE"
+---|"SPELL_PERIODIC_HEAL"
+---|"SPELL_PERIODIC_ENERGIZE"
+---|"SPELL_PERIODIC_DRAIN"
+---|"SPELL_PERIODIC_LEECH"
+---|"SPELL_DISPEL_FAILED"
+---|"DAMAGE_SHIELD"
+---|"DAMAGE_SHIELD_MISSED"
+---|"DAMAGE_SPLIT"
+---|"PARTY_KILL"
+---|"UNIT_DIED"
+---|"UNIT_DESTROYED"
+---|"SPELL_BUILDING_DAMAGE"
+---|"SPELL_BUILDING_HEAL"
+---|"UNIT_DISSIPATES"
+---|"SPELL_EMPOWER_START"
+---|"SPELL_EMPOWER_END"
+---|"SPELL_EMPOWER_INTERRUPT"
+
+-- Taken from vscode-wow-api/EmmyLua/API/Type/WowEvent.lua
+---@alias DBMUnfilteredEvent
+---|"UNIT_ABSORB_AMOUNT_CHANGED_UNFILTERED" # `unitTarget`
+---|"UNIT_AREA_CHANGED_UNFILTERED" # `unitTarget`
+---|"UNIT_ATTACK_UNFILTERED" # `unitTarget`
+---|"UNIT_ATTACK_POWER_UNFILTERED" # `unitTarget`
+---|"UNIT_ATTACK_SPEED_UNFILTERED" # `unitTarget`
+---|"UNIT_AURA_UNFILTERED" # `unitTarget, updateInfo`
+---|"UNIT_CHEAT_TOGGLE_EVENT"
+---|"UNIT_CLASSIFICATION_CHANGED_UNFILTERED" # `unitTarget`
+---|"UNIT_COMBAT_UNFILTERED" # `unitTarget, event, flagText, amount, schoolMask`
+---|"UNIT_CONNECTION_UNFILTERED" # `unitTarget, isConnected`
+---|"UNIT_CTR_OPTIONS_UNFILTERED" # `unitTarget`
+---|"UNIT_DAMAGE_UNFILTERED" # `unitTarget`
+---|"UNIT_DEFENSE_UNFILTERED" # `unitTarget`
+---|"UNIT_DISPLAYPOWER_UNFILTERED" # `unitTarget`
+---|"UNIT_DISTANCE_CHECK_UPDATE_UNFILTERED" # `unitTarget, isInDistance`
+---|"UNIT_ENTERED_VEHICLE_UNFILTERED" # `unitTarget, showVehicleFrame, isControlSeat, vehicleUIIndicatorID, vehicleGUID, mayChooseExit, hasPitch`
+---|"UNIT_ENTERING_VEHICLE_UNFILTERED" # `unitTarget, showVehicleFrame, isControlSeat, vehicleUIIndicatorID, vehicleGUID, mayChooseExit, hasPitch`
+---|"UNIT_EXITED_VEHICLE_UNFILTERED" # `unitTarget`
+---|"UNIT_EXITING_VEHICLE_UNFILTERED" # `unitTarget`
+---|"UNIT_FACTION_UNFILTERED" # `unitTarget`
+---|"UNIT_FLAGS_UNFILTERED" # `unitTarget`
+---|"UNIT_FORM_CHANGED_UNFILTERED" # `unitTarget`
+---|"UNIT_HEALTH_UNFILTERED" # `unitTarget`
+---|"UNIT_HEAL_ABSORB_AMOUNT_CHANGED_UNFILTERED" # `unitTarget`
+---|"UNIT_HEAL_PREDICTION_UNFILTERED" # `unitTarget`
+---|"UNIT_INVENTORY_CHANGED_UNFILTERED" # `unitTarget`
+---|"UNIT_IN_RANGE_UPDATE_UNFILTERED" # `unitTarget, isInRange`
+---|"UNIT_LEVEL_UNFILTERED" # `unitTarget`
+---|"UNIT_MANA_UNFILTERED" # `unitTarget`
+---|"UNIT_MAXHEALTH_UNFILTERED" # `unitTarget`
+---|"UNIT_MAXPOWER_UNFILTERED" # `unitTarget, powerType`
+---|"UNIT_MODEL_CHANGED_UNFILTERED" # `unitTarget`
+---|"UNIT_NAME_UPDATE_UNFILTERED" # `unitTarget`
+---|"UNIT_OTHER_PARTY_CHANGED_UNFILTERED" # `unitTarget`
+---|"UNIT_PET_UNFILTERED" # `unitTarget`
+---|"UNIT_PET_EXPERIENCE_UNFILTERED" # `unitTarget`
+---|"UNIT_PHASE_UNFILTERED" # `unitTarget`
+---|"UNIT_PORTRAIT_UPDATE_UNFILTERED" # `unitTarget`
+---|"UNIT_POWER_BAR_HIDE_UNFILTERED" # `unitTarget`
+---|"UNIT_POWER_BAR_SHOW_UNFILTERED" # `unitTarget`
+---|"UNIT_POWER_BAR_TIMER_UPDATE_UNFILTERED" # `unitTarget`
+---|"UNIT_POWER_FREQUENT_UNFILTERED" # `unitTarget, powerType`
+---|"UNIT_POWER_POINT_CHARGE_UNFILTERED" # `unitTarget`
+---|"UNIT_POWER_UPDATE_UNFILTERED" # `unitTarget, powerType`
+---|"UNIT_QUEST_LOG_CHANGED_UNFILTERED" # `unitTarget`
+---|"UNIT_RANGEDDAMAGE_UNFILTERED" # `unitTarget`
+---|"UNIT_RANGED_ATTACK_POWER_UNFILTERED" # `unitTarget`
+---|"UNIT_RESISTANCES_UNFILTERED" # `unitTarget`
+---|"UNIT_SPELLCAST_CHANNEL_START_UNFILTERED" # `unitTarget, castGUID, spellID`
+---|"UNIT_SPELLCAST_CHANNEL_STOP_UNFILTERED" # `unitTarget, castGUID, spellID`
+---|"UNIT_SPELLCAST_CHANNEL_UPDATE_UNFILTERED" # `unitTarget, castGUID, spellID`
+---|"UNIT_SPELLCAST_DELAYED_UNFILTERED" # `unitTarget, castGUID, spellID`
+---|"UNIT_SPELLCAST_EMPOWER_START_UNFILTERED" # `unitTarget, castGUID, spellID`
+---|"UNIT_SPELLCAST_EMPOWER_STOP_UNFILTERED" # `unitTarget, castGUID, spellID, complete`
+---|"UNIT_SPELLCAST_EMPOWER_UPDATE_UNFILTERED" # `unitTarget, castGUID, spellID`
+---|"UNIT_SPELLCAST_FAILED_UNFILTERED" # `unitTarget, castGUID, spellID`
+---|"UNIT_SPELLCAST_FAILED_QUIET_UNFILTERED" # `unitTarget, castGUID, spellID`
+---|"UNIT_SPELLCAST_INTERRUPTED_UNFILTERED" # `unitTarget, castGUID, spellID`
+---|"UNIT_SPELLCAST_INTERRUPTIBLE_UNFILTERED" # `unitTarget`
+---|"UNIT_SPELLCAST_NOT_INTERRUPTIBLE_UNFILTERED" # `unitTarget`
+---|"UNIT_SPELLCAST_RETICLE_CLEAR_UNFILTERED" # `unitTarget, castGUID, spellID`
+---|"UNIT_SPELLCAST_RETICLE_TARGET_UNFILTERED" # `unitTarget, castGUID, spellID`
+---|"UNIT_SPELLCAST_SENT_UNFILTERED" # `unit, target, castGUID, spellID`
+---|"UNIT_SPELLCAST_START_UNFILTERED" # `unitTarget, castGUID, spellID`
+---|"UNIT_SPELLCAST_STOP_UNFILTERED" # `unitTarget, castGUID, spellID`
+---|"UNIT_SPELLCAST_SUCCEEDED_UNFILTERED" # `unitTarget, castGUID, spellID`
+---|"UNIT_SPELL_HASTE_UNFILTERED" # `unitTarget`
+---|"UNIT_STATS_UNFILTERED" # `unitTarget`
+---|"UNIT_TARGET_UNFILTERED" # `unitTarget`
+---|"UNIT_TARGETABLE_CHANGED_UNFILTERED" # `unitTarget`
+---|"UNIT_THREAT_LIST_UPDATE_UNFILTERED" # `unitTarget`
+---|"UNIT_THREAT_SITUATION_UPDATE_UNFILTERED" # `unitTarget`
