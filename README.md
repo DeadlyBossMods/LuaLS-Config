@@ -2,11 +2,11 @@
 
 A plugin for LuaLS that adds definitions for DBM mods dynamically.
 
-Also a few extra definitions beyond what [vscode-wow-api](https://github.com/Ketho/vscode-wow-api) offers, mainly some Classic APIs and some random globals for which type information is nice to have.
+Also adds a few extra definitions beyond what [vscode-wow-api](https://github.com/Ketho/vscode-wow-api) offers, mainly some Classic APIs and some random globals for which type information is nice to have.
 
 ## Features
 
-**Can't remember all the NewTimer and NewAnnounce thing? We got autocomplete for all of these!**
+**Can't remember all the NewTimer and NewAnnounce things? We got autocomplete for all of these!**
 
 ![](./Screenshots/Timers.png)
 
@@ -38,9 +38,21 @@ Also a few extra definitions beyond what [vscode-wow-api](https://github.com/Ket
 	2. Add this line to the library array: `<path to where you cloned LuaLS-Config>/Definitions`
 	3. Add this line to the library array: `<path to where you cloned the DBM-Unified repo>`
 
+Your settings.json should look like this afterwards:
+
+```
+	"Lua.workspace.library": [
+		"C:/Users/You/wow-addons/DBM-Unified",
+		"C:/Users/You/wow-addons/LuaLS-Config/Definitions",
+		"c:\\Users\\You\\.vscode\\extensions\\ketho.wow-api-0.13.2\\EmmyLua\\API",
+		"c:\\Users\\You\\.vscode\\extensions\\ketho.wow-api-0.13.2\\EmmyLua\\Optional"
+	],
+	"Lua.runtime.plugin": "C:/Users/You/wow-addons/LuaLS-Config/DBM-Plugin.lua",
+```
+
 ## Setup for CI checks
 
-TODO: haven't done this yet, but it pretty much just needs a config file pointing to the right places as library and done
+TODO: haven't done this yet, but it pretty much just needs a config file pointing to the right places as library and done.
 
 ## FAQ
 
