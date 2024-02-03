@@ -1,0 +1,17 @@
+WARNING line:13:1 [getlocal:fooThing]: Registered event with non-literal string param.
+WARNING line:21:24 [integer:123]: Spell id 123 is not registered for event SPELL_CAST_START.
+WARNING line:21:46 [integer:456]: Spell id 456 is not registered for event SPELL_CAST_START.
+WARNING line:21:67 [integer:789]: Spell id 789 is not registered for event SPELL_CAST_START.
+WARNING line:25:23 [getlocal:fooId]: Unexpected parameter type getlocal to IsSpellID, expected raw spell ID.
+WARNING line:25:49 [getlocal:fooId]: Unexpected parameter type getlocal to .spellId equality check, expected raw spell ID.
+WARNING line:45:9 [setmethod:NOT_A_REGISTERED_EVENT]: Event NOT_A_REGISTERED_EVENT is not registered.
+WARNING line:49:15 [integer:123]: Spell id 123 is not registered for event SPELL_DAMAGE.
+WARNING line:21:24 [integer:123]: Spell id 123 is not registered for event SPELL_CAST_SUCCESS.
+WARNING line:21:46 [integer:456]: Spell id 456 is not registered for event SPELL_CAST_SUCCESS.
+WARNING line:21:67 [integer:789]: Spell id 789 is not registered for event SPELL_CAST_SUCCESS.
+WARNING line:23:23 [integer:1234]: Spell id 1234 is not registered for event SPELL_CAST_SUCCESS.
+WARNING line:25:23 [getlocal:fooId]: Unexpected parameter type getlocal to IsSpellID, expected raw spell ID.
+WARNING line:25:49 [getlocal:fooId]: Unexpected parameter type getlocal to .spellId equality check, expected raw spell ID.
+WARNING line:39:19 [integer:123]: Spell id 123 is not registered for event SPELL_AURA_APPLIED.
+WARNING line:51:16 [string:baz]: Sync event "baz" is sent but never explicitly checked for in OnSync().
+WARNING line:59:11 [string:blabla]: Sync event "blabla" is explicitly checked for in OnSync() but never sent.

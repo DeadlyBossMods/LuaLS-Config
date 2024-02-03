@@ -1,0 +1,69 @@
+local mod = DBM:NewMod("asdf", 5)
+
+local fooThing = "SPELL_CAST_FAILED 567"
+
+mod:RegisterEvents(
+	"SPELL_CAST_START 1234 42",
+	"SPELL_CAST_SUCCESS 42",
+	"SPELL_CAST_FAILED 567",
+	"SPELL_AURA_APPLIED 12",
+	"SOME_RANDOM_EVENT",
+	"SPELL_DAMAGE 42",
+	"UNIT_SPELLCAST_START raidboss1 focus target",
+	fooThing
+)
+
+local fooId = 42
+
+function mod:SPELL_CAST_START(args)
+	if args.spellId == 42 or args:IsSpellID(42) or args:IsSpell(42) then
+		print("okay")
+	elseif args.spellId == 123 or args:IsSpellID(456) or args:IsSpell(789) then
+		print("none are okay")
+	elseif args:IsSpellID(1234) then
+		print("okay for SPELL_CAST_START but not SPELL_CAST_SUCCESS")
+	elseif args:IsSpellID(fooId) or args.spellId == fooId then
+	end
+	local foo = args -- don't do that
+end
+mod.SPELL_CAST_SUCCESS = mod.SPELL_CAST_START
+
+-- why would anyone do this?
+mod.SPELL_CAST_FAILED = function(self, args)
+	if args:IsSpellID(123) then
+		print("fails")
+	end
+end
+
+local function eventHandlerInLocal(self, args)
+	if args:IsSpellID(123) then
+		print("fails")
+	end
+end
+mod.SPELL_AURA_APPLIED = eventHandlerInLocal
+
+function mod:NOT_A_REGISTERED_EVENT()
+end
+
+function mod:SPELL_DAMAGE(_, _, _, _, _, _, _, _, spellId)
+	if spellId == 123 then
+		print("fails")
+		self:SendSync("baz")
+	elseif spellId == 42 then
+		print("succeeds")
+		self:SendSync("foobar")
+	end
+end
+
+function mod:OnSync(msg)
+	if msg == "blabla" then
+		print("fails")
+	elseif msg == "foobar" then
+		print("succeeds")
+	end
+end
+
+-- should not trigger anything
+function mod:OnCombatStart(delay)
+end
+foo.something = mod.OnCombatStart
