@@ -1,10 +1,34 @@
 # LuaLS setup for Deadly Boss Mods
 
-A plugin for LuaLS that adds definitions for DBM mods dynamically.
+A LuaLS plugin for DBM development, features:
 
-Also adds a few extra definitions beyond what [vscode-wow-api](https://github.com/Ketho/vscode-wow-api) offers, mainly some Classic APIs and some random globals for which type information is nice to have.
+* Dynamic and automatically derived definitions for DBM mods
+* Custom diagnostics that find common mistakes in event handlers
+* A few extra definitions beyond what [vscode-wow-api](https://github.com/Ketho/vscode-wow-api), mostly for Classic
 
 ## Features
+
+**Event registration check**
+
+Checks if events for the handlers you define are registered, including checking for spell IDs referenced in the handler.
+
+![](./Screenshots/SpellID-Missing.png)
+
+**Sync handler check**
+
+Finds mismatches between sync messages sent and received.
+
+![](./Screenshots/Sync-Checker.png)
+
+**Auto-complete for events**
+
+Includes support for combat log sub-events and DBM-specific events like `_UNFILTERED` unit events.
+
+![](./Screenshots/Event-Enum.png)
+
+**Finds typos and other mistakes that are hard to spot**
+
+![](./Screenshots/Event-Handler-Params.png)
 
 **Can't remember all the NewTimer and NewAnnounce things? We got autocomplete for all of these!**
 
@@ -14,15 +38,6 @@ Also adds a few extra definitions beyond what [vscode-wow-api](https://github.co
 
 ![](./Screenshots/Parameters.png)
 (`Cmd+Shift+Space` in VS Code)
-
-**Finds typos and other mistakes that are hard to spot**
-
-![](./Screenshots/Event-Handler-Params.png)
-
-**Auto-complete for events**
-
-![](./Screenshots/Event-Enum.png)
-
 
 ## Setup for development
 
@@ -56,16 +71,25 @@ TODO: haven't done this yet, but it pretty much just needs a config file pointin
 
 ## FAQ
 
-### I get lots of errors about injected fields on DBM mods and the event handlers don't know their parameter types
+### Why is this so annoying to install and needs changes to my settings.json?
 
-Check if the plugin is being loded correctly, it will output "Loaded DBM-Plugin" to the LuaLS log on startup.
+Because git submodules are terrible, so we need add workspace-external references for the library path and plugin.
+Another solution would be one huge monorepo for all of DBM, but that would require a significant amount of work for the release infrastructure.
 
-Make sure that your LuaLS installation is new enough to contain [LuaLS/lua-language-server#2502](https://github.com/LuaLS/lua-language-server/pull/2502) or an equivalent commit.
+### I get lots of errors about injected fields on DBM mods, the spell ID check doesn't work and event handlers don't know their parameter types.
+
+Check if the plugin is being loaded correctly, it will output "Loaded DBM-Plugin" to the LuaLS log (Output -> Lua in VS Code) on startup.
+
+Make sure that your LuaLS installation is new enough to contain [LuaLS/lua-language-server#2502](https://github.com/LuaLS/lua-language-server/pull/2502).
+
+As of today (version 3.7.4) that means you will need to run LuaLS from HEAD.
 A hacky quick way to install a patched version is to just take the whole `script/` folder from my branch and copy it into the VS Code extension at `$HOME/.vscode/extensions/sumneko.lua-XYZ/server/script`.
 
 ### Why do we need a plugin?
 
-Because the type system cannot express the concept of abstract base classes properly.
+Two reasons: (1) the event registration, spell ID, and sync checks are implemented as a custom diagnostic in the plugin.
+
+And (2): Because the type system cannot express the concept of abstract base classes properly.
 DBM defines boss mod base functions in `bossModPrototype` in DBM-Core, this is the class `DBMMod`.
 A boss mod implementation effectively inherits from this when calling `DBM:NewMod()` and this concrete class implements things like event handlers etc.
 One important feature that we are looking for is automatic inference of the types of these event handlers, i.e., a combat log event should know that it receives an args table without requiring an explicit annotation.
