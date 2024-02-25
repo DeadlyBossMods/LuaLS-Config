@@ -50,6 +50,12 @@ function GetDungeonInfo(lfgDungeonID) end
 ---@return boolean
 function UnitInPhase(unit) end
 
+--- Classic replacement for C_UnitAuras.GetAuraDataByIndex()
+---@param unit UnitId
+---@param i number
+---@return string spellName, number icon, number count, string debuffType, number duration, number expirationTime, string unitCaster, boolean isStealable, boolean nameplateShowPersonal, number spellId, boolean canApplyAura, boolean isBossDebuff, boolean castByPlayer, boolean nameplateShowAll, number timeMod, any value1, any value2, any value3
+function UnitAura(unit, i) end
+
 --- Classic variant of UnitFactionGroup()
 ---@param unit UnitId
 ---@return string

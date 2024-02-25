@@ -47,7 +47,7 @@ Includes support for combat log sub-events and DBM-specific events like `_UNFILT
 4. Clone this repo: `git clone git@github.com:DeadlyBossMods/LuaLS-Config`
 5. Open VS Code's settings.json (`Cmd+Shift+P` -> "Open User Settings (JSON)")
 6. Enable the DBM plugin for LuaLS to settings.json
-	1. Add this line: `"Lua.runtime.plugin": "<path to where you cloned LuaLS-Config>/DBM-Plugin.lua",`
+	1. Add this line: `"Lua.runtime.plugin": "<path to where you cloned LuaLS-Config>/Plugin/Plugin.lua",`
 7. Add extra definitions for DBM to settings.json
 	1. Find the `Lua.workspace.library` entry, it should already exist and have entries from the WoW API extension
 	2. Add this line to the library array: `<path to where you cloned LuaLS-Config>/Definitions`
@@ -62,7 +62,7 @@ Your settings.json should look like this afterwards:
 		"c:\\Users\\You\\.vscode\\extensions\\ketho.wow-api-0.13.2\\EmmyLua\\API",
 		"c:\\Users\\You\\.vscode\\extensions\\ketho.wow-api-0.13.2\\EmmyLua\\Optional"
 	],
-	"Lua.runtime.plugin": "C:/Users/You/wow-addons/LuaLS-Config/DBM-Plugin.lua",
+	"Lua.runtime.plugin": "C:/Users/You/wow-addons/LuaLS-Config/Plugin/Plugin.lua",
 ```
 
 ## Setup for CI checks

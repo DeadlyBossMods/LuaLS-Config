@@ -1,5 +1,5 @@
 -- Events used by DBM in addition to normal events:
--- combat log sub-events and _UNFILTERED suffixes for some spammy events.
+-- combat log sub-events and _UNFILTERED suffixes for UNIT_ events where DBM supports unitID filtering.
 ---@meta
 
 -- From COMBATLOG_EVENT_LIST global
@@ -65,7 +65,7 @@
 ---|"UNIT_ATTACK_POWER_UNFILTERED" # `unitTarget`
 ---|"UNIT_ATTACK_SPEED_UNFILTERED" # `unitTarget`
 ---|"UNIT_AURA_UNFILTERED" # `unitTarget, updateInfo`
----|"UNIT_CHEAT_TOGGLE_EVENT"
+---|"UNIT_CHEAT_TOGGLE_EVENT_UNFILTERED"
 ---|"UNIT_CLASSIFICATION_CHANGED_UNFILTERED" # `unitTarget`
 ---|"UNIT_COMBAT_UNFILTERED" # `unitTarget, event, flagText, amount, schoolMask`
 ---|"UNIT_CONNECTION_UNFILTERED" # `unitTarget, isConnected`
