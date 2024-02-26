@@ -90,3 +90,5 @@ local function syncDiagnostic(uri, callback)
 end
 
 diagnostics:New("dbm-sync-checker", syncDiagnostic)
+
+print("Loaded DBM sync checker diagnostic")

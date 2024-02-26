@@ -85,4 +85,6 @@ function plugin:OnTransformAst(uri, ast)
 	end)
 end
 
+print("Loaded DBM mod classes plugin")
+
 return plugin

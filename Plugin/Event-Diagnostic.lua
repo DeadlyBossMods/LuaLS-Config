@@ -248,3 +248,5 @@ local function eventDiagnostic(uri, callback)
 end
 
 diagnostics:New("dbm-event-checker", eventDiagnostic)
+
+print("Loaded DBM event checker diagnostic")

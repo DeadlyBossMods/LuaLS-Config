@@ -67,7 +67,15 @@ Your settings.json should look like this afterwards:
 
 ## Setup for CI checks
 
-TODO: haven't done this yet, but it pretty much just needs a config file pointing to the right places as library and done.
+`Check-Config.lua` is a LuaLS config file to be used for running the LuaLS checker on DBM repositories. LuaLS expects to be run from its base path, so you need to invoke it like this:
+
+```
+./bin/lua-language-server \
+	--checklevel Information \
+	--configpath <path to this repository>/Check-Config.lua \
+	--dbm_libraries <path to github.com/DeadlyBossMods/DBM-Unified>,<Path to github.com/Ketho/vscode-wow-api>/EmmyLua \
+	--check <workspace path of whatever DBM mod you want to check>
+```
 
 ## FAQ
 
@@ -78,7 +86,7 @@ Another solution would be one huge monorepo for all of DBM, but that would requi
 
 ### I get lots of errors about injected fields on DBM mods, the spell ID check doesn't work and event handlers don't know their parameter types.
 
-Check if the plugin is being loaded correctly, it will output "Loaded DBM-Plugin" to the LuaLS log (Output -> Lua in VS Code) on startup.
+Check if the plugin is being loaded correctly, it will output "Loaded DBM (...)" messages to the LuaLS log (Output -> Lua in VS Code) on startup.
 
 Make sure that your LuaLS installation is new enough to contain [LuaLS/lua-language-server#2502](https://github.com/LuaLS/lua-language-server/pull/2502).
 
