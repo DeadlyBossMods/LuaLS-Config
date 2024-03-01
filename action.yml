@@ -1,0 +1,79 @@
+name: luals-dbm-checker
+description: Runs the LuaLS check command with the DBM plugin loaded.
+branding:
+  icon: check-square
+  color: yellow
+
+inputs:
+  luals-repo:
+    description: "Where to clone lua-language-server from"
+    default: LuaLS/lua-language-server
+  luals-ref:
+    description: "Which branch, tag, or commit to use for LuaLS"
+    required: true
+  luals-check-dir:
+    description: "Directory to check"
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Cache LuaLS
+      id: cache-luals
+      uses: actions/cache@v4
+      env:
+        cache-name: luals
+      with:
+        path: ${{ github.workspace }}/luals
+        key: ${{ inputs.luals-repo }}/${{ inputs.luals-ref }}
+    - if: ${{ steps.cache-luals.outputs.cache-hit != 'true' }}
+      name: "Install LuaLS build dependencies"
+      shell: sh
+      run: |
+        export DEBIAN_FRONTEND=noninteractive
+        sudo apt-get update
+        sudo apt-get install -y ninja-build
+    - if: ${{ steps.cache-luals.outputs.cache-hit != 'true' }}
+      name: Checkout LuaLS
+      uses: actions/checkout@v4
+      with:
+        repository: ${{ inputs.luals-repo }}
+        ref: ${{ inputs.luals-ref }}
+        submodules: recursive
+        path: ./luals
+    - if: ${{ steps.cache-luals.outputs.cache-hit != 'true' }}
+      name: Compile LuaLS
+      shell: sh
+      run: |
+        cd ${{ github.workspace }}/luals
+        pushd 3rd/luamake
+        ./compile/build.sh
+        popd
+        ./3rd/luamake/luamake -notest rebuild
+    - name: Checkout LuaLS config
+      uses: actions/checkout@v4
+      with:
+        repository: DeadlyBossMods/LuaLS-Config
+        path: ./luals-config
+    - name: Checkout DBM-Unified
+      uses: actions/checkout@v4
+      with:
+        repository: DeadlyBossMods/DBM-Unified
+        path: ./DBM-Unified
+    - name: Checkout vscode-wow-api
+      uses: actions/checkout@v4
+      with:
+        repository: Ketho/vscode-wow-api
+        path: ./vscode-wow-api
+    - name: Run checks
+      shell: sh
+      run: |
+        cd luals
+        ./bin/lua-language-server \
+          --checklevel Information \
+          --configpath "${{ github.workspace }}/luals-config/Check-Config.lua" \
+          --dbm_libraries "${{ github.workspace }}/DBM-Unified,${{ github.workspace }}/vscode-wow-api/EmmyLua" \
+          --trust_all_plugins \
+          --check "${{ inputs.luals-check-dir }}"
+        touch log/check.json
+        cat ${{ github.workspace }}/luals/log/check.json |  jq -r 'to_entries | map(.key as $file | .value[] | {file: $file | sub("file://${{ github.workspace }}/workspace/"; ""), title: .code, line: .range.start.line, endLine: .range.end.line, col: .range.start.character, endColumn: .range.end.character, message: .message | sub("\n"; "\\\\n"; "m")}) | map("::warning file=\(.file),line=\(.line+1),endLine=\(.line+1),col=\(.col+1),endColumn=\(fmax(.col;.endColumn)+1),title=\(.title)::\(.message)") | .[]'
