@@ -43,7 +43,7 @@ runs:
         path: ./luals
     - if: ${{ steps.cache-luals.outputs.cache-hit != 'true' }}
       name: Compile LuaLS
-      shell: sh
+      shell: bash
       run: |
         cd ${{ github.workspace }}/luals
         pushd 3rd/luamake
