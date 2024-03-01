@@ -66,14 +66,24 @@ runs:
         repository: Ketho/vscode-wow-api
         path: ./vscode-wow-api
     - name: Run checks
-      shell: sh
+      shell: bash
       run: |
         cd luals
+        # Only add DBM-Unified as an external library if we are not checking DBM-Unified itself
+        # If we check DBM-Unified we still need it as a library, but it needs to be in the same path
+        if [[ -d "${{ inputs.luals-check-dir }}/DBM-Core" && -d "${{ inputs.luals-check-dir }}/DBM-Core" ]]; then
+          libs="${{ inputs.luals-check-dir }},${{ github.workspace }}/vscode-wow-api/EmmyLua"
+        else
+          libs="${{ github.workspace }}/DBM-Unified,${{ github.workspace }}/vscode-wow-api/EmmyLua"
+        fi
         ./bin/lua-language-server \
           --checklevel Information \
           --configpath "${{ github.workspace }}/luals-config/Check-Config.lua" \
-          --dbm_libraries "${{ github.workspace }}/DBM-Unified,${{ github.workspace }}/vscode-wow-api/EmmyLua" \
+          --dbm_libraries "$libs" \
           --trust_all_plugins \
           --check "${{ inputs.luals-check-dir }}"
         touch log/check.json
-        cat ${{ github.workspace }}/luals/log/check.json |  jq -r 'to_entries | map(.key as $file | .value[] | {file: $file | sub("file://${{ github.workspace }}/workspace/"; ""), title: .code, line: .range.start.line, endLine: .range.end.line, col: .range.start.character, endColumn: .range.end.character, message: .message | sub("\n"; "\\\\n"; "m")}) | map("::warning file=\(.file),line=\(.line+1),endLine=\(.line+1),col=\(.col+1),endColumn=\(fmax(.col;.endColumn)+1),title=\(.title)::\(.message)") | .[]'
+        # Warnings as readable outsputs because GitHub doesn't show any metadata in the log when emitting annotations and limits annotations to 10 or so
+        cat ${{ github.workspace }}/luals/log/check.json |  jq -r 'to_entries | map(.key as $file | .value[] | {file: $file | sub("file://${{ github.workspace }}/workspace/"; ""), title: .code, line: .range.start.line, endLine: .range.end.line, col: .range.start.character, endColumn: .range.end.character, message: .message}) | map("Warning: \(.file):\(.line+1) \(.title): \(.message)") | .[]'
+        # GitHub annotations
+        cat ${{ github.workspace }}/luals/log/check.json |  jq -r 'to_entries | map(.key as $file | .value[] | {file: $file | sub("file://${{ github.workspace }}/workspace/"; ""), title: .code, line: .range.start.line, endLine: .range.end.line, col: .range.start.character, endColumn: .range.end.character, message: .message | gsub("\n"; "\\\\n"; "m")}) | map("::warning file=\(.file),line=\(.line+1),endLine=\(.line+1),col=\(.col+1),endColumn=\(.endColumn+1),title=\(.title)::\(.message)") | .[]'
