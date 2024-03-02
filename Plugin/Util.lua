@@ -41,8 +41,19 @@ local function getDbmModVar(node, uri)
 		getfield = true,
 		ifblock = true,
 	}
+	-- Distinguish `foo.bar = DBM:NewMod()` vs things like `foo[DBM:NewMod()] = bar` or `DBM:GetModByName("foo").Options = foo`
+	-- The latter is actually a problem in GUI, the others seem unlikely
+	local ambiguousSetTypes = {
+		setfield = true,
+		tableexp = true,
+		tablefield = true,
+		tableindex = true
+	}
 	local varNode = guide.getParentTypes(node, parentTypes)
 	if not varNode or nonAssignParentTypes[varNode.type] then
+		return
+	end
+	if ambiguousSetTypes[varNode.type] and varNode.value ~= callNode and not (varNode.value.type == "select" and varNode.value.vararg == callNode) then
 		return
 	end
 	return varNode, callNode, getModNameFromArg(callNode.args[2], uri), nodeName

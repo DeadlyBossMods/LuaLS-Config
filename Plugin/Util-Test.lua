@@ -96,6 +96,7 @@ assert(found[2].name == "DBMModFoo")
 assert(found[2].type == "NewMod")
 
 found = test[[
+	DBM:GetModByName("Foo").Options = 1
 	DBM:GetModByName("Foo").Options.Bar = 1
 ]]
 assert(#found == 0)
