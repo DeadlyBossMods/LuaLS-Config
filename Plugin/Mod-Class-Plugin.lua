@@ -65,7 +65,7 @@ local function addFullModClassComment(ast, varNode, className)
 	astHelper.addDoc(ast, varNode, "field", "UNIT_TARGETABLE_CHANGED_UNFILTERED fun(self: " .. className .. ", uId: string)", group)
 	-- On* events
 	astHelper.addDoc(ast, varNode, "field", "OnSync fun(self: " .. className .. ", msg: string, arg1: string, arg2: string, arg3: string, arg4: string, arg5: string)", group)
-	astHelper.addDoc(ast, varNode, "field", "OnCombatStart fun(self: " .. className .. ", delay: number)", group)
+	astHelper.addDoc(ast, varNode, "field", "OnCombatStart fun(self: " .. className .. ", delay: number, startedByCastOrRegenDisabledOrMessage: boolean, startedByEncounter: boolean)", group)
 end
 
 function plugin:OnTransformAst(uri, ast)
