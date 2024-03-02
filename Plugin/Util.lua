@@ -25,6 +25,7 @@ local function getDbmModVar(node, uri)
 	end
 	local parentTypes = {
 		["local"] = true,
+		setlocal = true,
 		setglobal = true,
 		setfield = true,
 		setindex = true,

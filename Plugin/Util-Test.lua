@@ -47,6 +47,14 @@ assert(found[4].name == "DBMModFoo4")
 assert(found[5].name == "DBMModFoo5")
 
 found = test[[
+	local function foo(bar)
+		bar = DBM:GetModByName(bar)
+	end
+]]
+assert(#found == 1)
+assert(found[1].node.type == "setlocal")
+
+found = test[[
 	local mod = DBM:NewMod("Foo")
 	function mod:Foo()
 	end

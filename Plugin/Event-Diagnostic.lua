@@ -361,7 +361,7 @@ local function eventDiagnostic(uri, callback)
 	util.EachDBMModVar(state, function(varNode, callNode, className)
 		local modVars = mods[className] or {}
 		mods[className] = modVars
-		if varNode.type == "local" or varNode.type == "self" then
+		if varNode.type == "local" or varNode.type == "self" or varNode.type == "setlocal" then
 			varNode.ref = varNode.ref or {}
 			modVars[#modVars + 1] = varNode
 		else
