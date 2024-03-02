@@ -30,14 +30,14 @@ test [[
 	end
 ]]
 
--- FIXME: this should fail but passes
+-- Different mods are different
 test [[
-	local mod1 = DBM:NewMod("name")
-	local mod2 = DBM:NewMod("name")
+	local mod1 = DBM:NewMod("name1")
+	local mod2 = DBM:NewMod("name2")
 	function mod1:Bar()
-		self:SendSync("foo")
+		self:SendSync(<!"foo"!>)
 	end
 	function mod2:OnSync(msg)
-		if msg == "foo" then end
+		if <!msg == "foo"!> then end
 	end
 ]]

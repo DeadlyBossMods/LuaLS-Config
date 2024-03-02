@@ -4,7 +4,7 @@ package.path = "./script/?.lua;./script/?/init.lua;./test/?.lua;./test/?/init.lu
 package.path = package.path .. basePath .. "/?.lua;"
 package.path = package.path .. basePath .. "/?/init.lua"
 _G.log = require "log"
-local fs = require 'bee.filesystem'
+local fs = require "bee.filesystem"
 ROOT = fs.path(fs.exe_path():parent_path():parent_path():string()) -- The dir under which LuaLS is
 TEST = true
 DEVELOP = true
@@ -14,5 +14,9 @@ LUA_VER = "Lua 5.1"
 require "Event-Diagnostic"
 require "Sync-Diagnostic"
 
+require "Test-Helpers"
+
 require "Event-Diagnostic-Test"
 require "Sync-Diagnostic-Test"
+
+require "Util-Test"

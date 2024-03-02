@@ -27,6 +27,92 @@ test [[
 	mod:RegisterEvents("SPELL_CAST_START")
 	function <!mod:SPELL_CAST_FAILED!>()
 	end
+	function mod:SPELL_CAST_START()
+	end
+	function mod:OnSync() -- Not an event handler, shouldn't trigger
+	end
+]]
+
+-- Invalid events
+test [[
+	local mod = DBM:NewMod("name")
+	mod:RegisterEvents(
+		"SPELL_CAST_START",
+		<!"DOESNT_EXIST"!>,
+
+		"SPELL_DAMAGE 123",
+		<!"SWING_DAMAGE 123"!>,
+
+		"SPELL_AURA_APPLIED_DOSE",
+		<!"SPELL_AURA_APPLIED DOSE"!>,
+
+		"UNIT_HEALTH",
+		"UNIT_HEALTH boss5 player nameplate13 spectatedpeta2 arena5 party2 raid7",
+		<!"UNIT_HEALTH something"!>,
+
+		"UNIT_HEALTH_UNFILTERED",
+		<!"UNIT_HEALTH_UNFILTERED player"!>,
+
+		"CHAT_MSG_MONSTER_YELL",
+		<!"CHAT_MSG_MONSTER_YELL foo"!>
+	)
+	function mod:SPELL_CAST_START() end
+	function mod:DOESNT_EXIST() end
+	function mod:SPELL_DAMAGE() end
+	function mod:SWING_DAMAGE() end
+	function mod:SPELL_AURA_APPLIED_DOSE() end
+	function mod:SPELL_AURA_APPLIED() end
+	function mod:UNIT_HEALTH() end
+	function mod:UNIT_HEALTH_UNFILTERED() end
+	function mod:CHAT_MSG_MONSTER_YELL() end
+]]
+
+-- Registered but unused events
+test [[
+	local mod = DBM:NewMod("name")
+	mod:RegisterEvents("SPELL_AURA_APPLIED 123", <!"SPELL_AURA_APPLIED_DOSE 123"!>)
+	function mod:SPELL_AURA_APPLIED()
+	end
+]]
+
+-- Registration via different references, same mod name
+test [[
+	local mod = DBM:NewMod("name")
+	mod:RegisterEvents("SPELL_DAMAGE")
+	function mod:SWING_DAMAGE() end
+
+	local mod2 = DBM:GetModByName("name")
+	mod2:RegisterEvents("SWING_DAMAGE")
+	function mod2:SPELL_DAMAGE() end
+]]
+
+-- Registration via different references, different mods
+test [[
+	local mod = DBM:NewMod("name")
+	mod:RegisterEvents(<!"SPELL_DAMAGE"!>)
+	function <!mod:SWING_DAMAGE!>() end
+
+	local mod2 = DBM:GetModByName("name2")
+	mod2:RegisterEvents(<!"SWING_DAMAGE"!>)
+	function <!mod2:SPELL_DAMAGE!>() end
+]]
+
+-- Registration via function parameters
+test [[
+	local mod = DBM:NewMod("name")
+	function mod:OnCombatStart()
+		self:RegisterShortTermEvents("SPELL_DAMAGE")
+	end
+	local function syncHandler(mod)
+		mod:RegisterShortTermEvents("SWING_DAMAGE")
+	end
+	mod.OnSync = syncHandler
+	mod.OnFoo = function(foo) foo:RegisterShortTermEvents("UNIT_HEALTH") end
+	function mod.OnSync(bar) bar:RegisterShortTermEvents("SPELL_CAST_START") end
+	function mod:SPELL_DAMAGE() end
+	function mod:SWING_DAMAGE() end
+	function mod:UNIT_HEALTH() end
+	function mod:SPELL_CAST_START() end
 ]]
 
 -- Spell IDs not registered
@@ -43,12 +129,24 @@ test [[
 	end
 ]]
 
+-- Multiple registrations
+test [[
+	local mod = DBM:NewMod("name")
+	mod:RegisterEvents("SPELL_AURA_APPLIED 123")
+	function mod:OnCombatStart()
+		self:RegisterShortTermEvents("SPELL_AURA_APPLIED 456")
+	end
+	function mod:SPELL_AURA_APPLIED(args)
+		if args:IsSpell(123, 456) then end
+	end
+]]
+
 -- Handlers point to another handler
 test [[
 	local mod = DBM:NewMod("name")
 	mod:RegisterEvents("SPELL_AURA_APPLIED 123 456", "SPELL_AURA_APPLIED_DOSE 123")
 	function mod:SPELL_AURA_APPLIED(args)
-		if args:IsSpellID(123, <!789!>) then end
+		if args:IsSpellID(123, 456, <!789!>) then end
 	end
 	mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
 ]]
@@ -56,7 +154,7 @@ test [[
 -- Handler is in a separate function
 test [[
 	local mod = DBM:NewMod("name")
-	mod:RegisterEvents("SPELL_AURA_APPLIED 123 456", "SPELL_AURA_APPLIED_DOSE 123 456")
+	mod:RegisterEvents("SPELL_AURA_APPLIED 123 456", "SPELL_AURA_APPLIED_DOSE 123")
 	local function handler(mod, args)
 		if args.spellId == 123 or args.spellId == 456 or <!args.spellId == 789!> then end
 	end
@@ -64,7 +162,18 @@ test [[
 	mod.SPELL_AURA_APPLIED_DOSE = handler
 ]]
 
--- Multiple mods
+-- Mixing raw and argtable events
+test [[
+	local mod = DBM:NewMod("name")
+	mod:RegisterEvents("SPELL_AURA_APPLIED 123 456", "SPELL_DAMAGE 123")
+	local function <!handler!>(mod, args)
+		if args.spellId == 123 or args.spellId == 456 or args.spellId == 789 then end
+	end
+	mod.SPELL_AURA_APPLIED = handler
+	mod.SPELL_DAMAGE = handler
+]]
+
+-- Multiple different mods
 test [[
 	local mod1 = DBM:NewMod("name1")
 	local mod2 = DBM:NewMod("name2")
@@ -79,8 +188,6 @@ test [[
 ]]
 
 -- Same mod in multiple variables
--- FIXME: this doesn't pass right now
---[[
 test [[
 	local mod1 = DBM:NewMod("name")
 	local mod2 = DBM:GetModByName("name")
@@ -116,7 +223,7 @@ test [[
 -- Bad or unsupported event handlers
 test [[
 	local mod = DBM:NewMod("name")
-	mod:RegisterEvents("SPELL_DAMAGE 123")
+	mod:RegisterEvents(<!"SPELL_DAMAGE 123"!>)
 	mod.SPELL_DAMAGE = <!5!>
 	mod.SPELL_DAMAGE = <!SOME_GLOBAL!>
 	local x = 5
@@ -140,9 +247,10 @@ test [[
 	local y = {<!foo!> = DBM:NewMod("name")}
 	local z = {<!["foo"]>! = DBM:NewMod("name")}
 	<!x.mod!> = DBM:NewMod("name")
-	print<!(DBM:NewMod("name"))!>
+	print(DBM:NewMod("name"))
+	local x = DBM:GetModByName("foo") or DBM:NewMod("foo")
 	x.mod:RegisterEvents("SPELL_AURA_APPLIED 123")
 	function x.mod:SPELL_DAMAGE(args)
-		if args.spellId == 456 then end -- Passes
+		if args.spellId == 456 then end -- Passes because x.mod isn't supported
 	end
 ]]

@@ -8,11 +8,11 @@ local function analyzeMod(modVars, ast, callback)
 	local syncsReceived = {}
 	local syncsSent = {}
 	for _, modVar in ipairs(modVars) do
-		for k, node in ipairs(modVar.ref) do
-			local setMethodNode = node.parent
-			local methodName = guide.getKeyName(setMethodNode)
-			if setMethodNode and setMethodNode.type == "setmethod" and methodName == "OnSync" then
-				local syncArg = setMethodNode.value.args[2]
+		for _, node in ipairs(modVar.ref) do
+			local methodNode = node.parent
+			local methodName = guide.getKeyName(methodNode)
+			if methodNode and methodNode.type == "setmethod" and methodName == "OnSync" then
+				local syncArg = methodNode.value.args[2]
 				if syncArg and syncArg.ref then
 					for _, argRef in ipairs(syncArg.ref) do
 						local binary = argRef.parent
@@ -31,24 +31,14 @@ local function analyzeMod(modVars, ast, callback)
 					end
 				end
 			end
-		end
-	end
-	-- FIXME: these are just all SendSync calls on variables named mod or self, doesn't work for multiple mods in a file
-	-- A proper implementation needs to check methods defined on the mods and methods called on their self params
-	-- For now this is "good enough"
-	guide.eachSourceType(ast, "call", function(callNode)
-		if callNode.node.type ~= "getmethod" then return end
-		local getMethodNode = callNode.node
-		local objNode = getMethodNode.node
-		local methodName = guide.getKeyName(getMethodNode)
-		local objName = guide.getKeyName(objNode)
-		if methodName == "SendSync" and (objName == "mod" or objName == "self") then
-			local arg = callNode.args[2]
-			if arg and arg.type == "string" then
-				syncsSent[guide.getLiteral(arg)] = arg
+			if methodNode and methodNode.type == "getmethod" and methodName == "SendSync" then
+				local arg = methodNode.parent.args[2]
+				if arg and arg.type == "string" then
+					syncsSent[guide.getLiteral(arg)] = arg
+				end
 			end
 		end
-	end)
+	end
 	for k, v in pairs(syncsSent) do
 		if not syncsReceived[k] then
 			callback{
@@ -76,8 +66,8 @@ local function syncDiagnostic(uri, callback)
     end
 	local ast = state.ast
 	local mods = {}
-	util.EachDBMModVar(ast, uri, function(varNode, callNode, className)
-		if varNode.type == "local" then
+	util.EachDBMModVar(state, function(varNode, callNode, className)
+		if varNode.type == "local" or varNode.type == "self" then
 			varNode.ref = varNode.ref or {}
 			local modVars = mods[className] or {}
 			mods[className] = modVars

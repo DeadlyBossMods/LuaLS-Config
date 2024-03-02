@@ -74,12 +74,9 @@ function plugin:OnTransformAst(uri, ast)
 		return
 	end
 	util.EachDBMModVar(ast, uri, function(varNode, _, className, callType)
-		if varNode.type ~= "local" and varNode.type ~= "setglobal" and varNode.type ~= "setfield" then
-			return
-		end
 		if callType == "NewMod" then
 			addFullModClassComment(ast, varNode, className)
-		elseif callType == "GetModByName" then
+		else
 			addClassDeclaration(ast, varNode, className)
 		end
 	end)
