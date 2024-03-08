@@ -22,12 +22,13 @@ function C_Seasons.HasActiveSeason() end
 --- Only available in Classic.
 ---@enum Enum.SeasonID
 Enum.SeasonID = {
-	NoSeason        = 0,
-	SeasonOfMastery = 1,
-	--- Season of Discovery
-	Placeholder     = 2,
-	Hardcore        = 3,
+	NoSeason          = 0,
+	SeasonOfMastery   = 1,
+	SeasonOfDiscovery = 2,
+	Hardcore          = 3,
 }
+--- SeasonID as string, useful as a parameter to avoid having to nil-check every Enum.SeasonID access in functions that take a season as parameter.
+---@alias SeasonID "NoSeason" | "SeasonOfMastery" | "SeasonOfDiscovery" | "Hardcore"
 
 --- [Documentation](https://warcraft.wiki.gg/wiki/API_C_Seasons.GetActiveSeason)
 --- Only available in Classic.
