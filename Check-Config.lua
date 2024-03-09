@@ -74,9 +74,16 @@ return {
 	["Lua.runtime.version"] = "Lua 5.1",
 	["Lua.runtime.plugin"] = pluginPath,
 	["Lua.diagnostics.globals"] = globals,
+	["Lua.diagnostics.disable"] = {
+		"unused-local", -- Very spammy and low value
+		"redefined-local", -- Low value
+		"empty-block", -- Triggers on some locales, generally not very useful
+		"invisible", -- Slowest diagnostic and we don't use it
+		"deprecated", -- Second slowest diagnostic and also pretty much unused for us
+		"duplicate-doc-field" -- Slow to run on mods, likely due to the auto-generated field annotations (which we don't need to check)
+	},
 	["Lua.diagnostics.severity"]  = {
 		["undefined-global"] = "Error",
 		["lowercase-global"] = "Error",
-		["unused-local"] = "Notice",
 	}
 }
