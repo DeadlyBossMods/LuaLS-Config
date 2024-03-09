@@ -73,5 +73,9 @@ return {
 	["Lua.workspace.library"] = libs,
 	["Lua.runtime.version"] = "Lua 5.1",
 	["Lua.runtime.plugin"] = pluginPath,
-	["Lua.diagnostics.globals"] = globals
+	["Lua.diagnostics.globals"] = globals,
+	["Lua.diagnostics.severity"]  = {
+		["undefined-global"] = "Error",
+		["lowercase-global"] = "Error",
+	}
 }

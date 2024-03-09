@@ -77,15 +77,26 @@ runs:
         else
           libs="${{ github.workspace }}/DBM-Unified,${{ github.workspace }}/vscode-wow-api/EmmyLua"
         fi
+        rm -f log/check.json
         ./bin/lua-language-server \
           --checklevel Information \
           --configpath "${{ github.workspace }}/luals-config/Check-Config.lua" \
           --dbm_libraries "$libs" \
           --trust_all_plugins \
           --check "${{ inputs.luals-check-dir }}"
+        STATUS=0
+        if [[ -e log/check.json ]] ; then
+          STATUS=1
+        fi
         touch log/check.json
         # Warnings as readable outsputs because GitHub doesn't show any metadata in the log when emitting annotations and limits annotations to 10 or so
-        cat ${{ github.workspace }}/luals/log/check.json |  jq -r 'to_entries | map(.key as $file | .value[] | {file: $file | sub("file://${{ github.workspace }}/workspace/"; ""), title: .code, line: .range.start.line, endLine: .range.end.line, col: .range.start.character, endColumn: .range.end.character, message: .message}) | map("Warning: \(.file):\(.line+1) \(.title): \(.message)") | .[]'
+        cat ${{ github.workspace }}/luals/log/check.json | \
+          jq -r 'to_entries | map(.key as $file | .value[] | {file: $file | sub("file://${{ github.workspace }}/workspace/"; ""), title: .code, line: .range.start.line, endLine: .range.end.line, col: .range.start.character, endColumn: .range.end.character, message: .message, level: (if .severity <= 1 then "Error" else "Warning" end)}) | map("\(.level): \(.file):\(.line+1):\(.col+1) \(.title) - \(.message)") | .[]' \
+          | tee $GITHUB_STEP_SUMMARY
+        if [[ $STATUS == 0 ]] ; then
+          echo "✅ All checks succeeded!" | tee $GITHUB_STEP_SUMMARY
+        fi
         # GitHub annotations
-        cat ${{ github.workspace }}/luals/log/check.json |  jq -r 'to_entries | map(.key as $file | .value[] | {file: $file | sub("file://${{ github.workspace }}/workspace/"; ""), title: .code, line: .range.start.line, endLine: .range.end.line, col: .range.start.character, endColumn: .range.end.character, message: .message | gsub("\n"; "\\\\n"; "m")}) | map("::warning file=\(.file),line=\(.line+1),endLine=\(.line+1),col=\(.col+1),endColumn=\(.endColumn+1),title=\(.title)::\(.message)") | .[]'
+        cat ${{ github.workspace }}/luals/log/check.json |  jq -r 'to_entries | map(.key as $file | .value[] | {file: $file | sub("file://${{ github.workspace }}/workspace/"; ""), title: .code, line: .range.start.line, endLine: .range.end.line, col: .range.start.character, endColumn: .range.end.character, message: .message | gsub("\n"; "\\\\n"; "m"), level: (if .severity <= 1 then "error" else "warning" end)}) | map("::\(.level) file=\(.file),line=\(.line+1),endLine=\(.line+1),col=\(.col+1),endColumn=\(.endColumn+1),title=\(.title)::\(.message)") | .[]'
         rm -rf log/*
+        exit $STATUS
