@@ -77,5 +77,6 @@ return {
 	["Lua.diagnostics.severity"]  = {
 		["undefined-global"] = "Error",
 		["lowercase-global"] = "Error",
+		["unused-local"] = "Notice",
 	}
 }
