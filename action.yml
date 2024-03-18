@@ -56,11 +56,11 @@ runs:
       with:
         repository: DeadlyBossMods/LuaLS-Config
         path: ./luals-config
-    - name: Checkout DBM-Unified
+    - name: Checkout DBM main repo
       uses: actions/checkout@v4
       with:
-        repository: DeadlyBossMods/DBM-Unified
-        path: ./DBM-Unified
+        repository: DeadlyBossMods/DeadlyBossMods
+        path: ./DBM-Main-Repo
     - name: Checkout vscode-wow-api
       uses: actions/checkout@v4
       with:
@@ -70,12 +70,12 @@ runs:
       shell: bash
       run: |
         cd luals
-        # Only add DBM-Unified as an external library if we are not checking DBM-Unified itself
-        # If we check DBM-Unified we still need it as a library, but it needs to be in the same path
-        if [[ -d "${{ inputs.luals-check-dir }}/DBM-Core" && -d "${{ inputs.luals-check-dir }}/DBM-Core" ]]; then
-          libs="${{ inputs.luals-check-dir }},${{ github.workspace }}/vscode-wow-api/EmmyLua"
+        # Only add the main DBM repo as an external library if we are not checking the DBM main repo itself
+        # If we check the main repo we still need it declared as a library, but it needs to be in the same path and not a separate copy
+        if [[ -d "${{ inputs.luals-check-dir }}/DBM-Core" ]]; then
+          libs="${{ inputs.luals-check-dir }}/DBM-Core,${{ inputs.luals-check-dir }}/DBM-StatusBarTimers,${{ github.workspace }}/vscode-wow-api/EmmyLua"
         else
-          libs="${{ github.workspace }}/DBM-Unified,${{ github.workspace }}/vscode-wow-api/EmmyLua"
+          libs="${{ github.workspace }}/DBM-Main-Repo/DBM-Core,${{ github.workspace }}/DBM-Main-Repo/DBM-StatusBarTimers,${{ github.workspace }}/vscode-wow-api/EmmyLua"
         fi
         rm -f log/check.json
         ./bin/lua-language-server \
