@@ -57,7 +57,8 @@ Your settings.json should look like this afterwards:
 
 ```
 	"Lua.workspace.library": [
-		"C:/Users/You/wow-addons/DBM-Unified",
+		"C:/Users/You/wow-addons/DeadlyBossMods/DBM-Core",
+		"C:/Users/You/wow-addons/DeadlyBossMods/DBM-StatusBarTimers",
 		"C:/Users/You/wow-addons/LuaLS-Config/Definitions",
 		"c:\\Users\\You\\.vscode\\extensions\\ketho.wow-api-0.13.2\\EmmyLua\\API",
 		"c:\\Users\\You\\.vscode\\extensions\\ketho.wow-api-0.13.2\\EmmyLua\\Optional"
@@ -73,7 +74,7 @@ Your settings.json should look like this afterwards:
 ./bin/lua-language-server \
 	--checklevel Information \
 	--configpath <path to this repository>/Check-Config.lua \
-	--dbm_libraries <path to github.com/DeadlyBossMods/DBM-Unified>,<Path to github.com/Ketho/vscode-wow-api>/EmmyLua \
+	--dbm_libraries <path to github.com/DeadlyBossMods/DeadlyBossMods>/DBM-Core,<path to github.com/DeadlyBossMods/DeadlyBossMods>/DBM-StatusBarTimers,<Path to github.com/Ketho/vscode-wow-api>/EmmyLua \
 	--check <workspace path of whatever DBM mod you want to check>
 ```
 
