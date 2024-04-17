@@ -105,12 +105,23 @@ local function analyzeEventHandler(node, handlerMapping, registeredEvents, callb
 					end
 				end
 			elseif parent and parent.type == "getfield" then
-				-- Only catch the simple "args.spellId == xyz" case
 				local fieldName = guide.getKeyName(parent)
-				local binary = parent.parent
-				if fieldName == "spellId" and binary and binary.type == "binary" and binary.op.type == "==" then
-					local other = binary[1] == parent and binary[2] or binary[1]
-					checkSpellIdUsage(other, ".spellId equality check", binary)
+				if fieldName == "spellId" then
+					local fieldUsage = parent.parent
+					-- Handle the "args.spellId == xyz" case
+				 	if fieldUsage and fieldUsage.type == "binary" and fieldUsage.op.type == "==" then
+						local other = fieldUsage[1] == parent and fieldUsage[2] or fieldUsage[1]
+						checkSpellIdUsage(other, ".spellId equality check", fieldUsage)
+					-- Handle the "local foo = args.spellId if foo == xyyz then" case
+					elseif fieldUsage and fieldUsage.type == "local" and fieldUsage.ref then
+						for _, ref in ipairs(fieldUsage.ref) do
+							fieldUsage = ref.parent
+							if fieldUsage.type == "binary" and fieldUsage.op.type == "==" then
+								local other = fieldUsage[1] == ref and fieldUsage[2] or fieldUsage[1]
+								checkSpellIdUsage(other, "spellId propagated to local equality check", fieldUsage)
+							end
+						end
+					end
 				end
 			end
 		end

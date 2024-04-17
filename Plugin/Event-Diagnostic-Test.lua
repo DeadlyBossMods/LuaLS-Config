@@ -120,12 +120,15 @@ test [[
 	local mod = DBM:NewMod("name")
 	mod:RegisterEvents("SPELL_AURA_APPLIED 123")
 	function mod:SPELL_AURA_APPLIED(args)
+		local foo = args.spellId
 		if args:IsSpell(123, <!456!>) then end
 		if args:IsSpellID(123, <!456!>) then end
 		if <!args.spellId == 789!> then end
 		if <!789 == args.spellId!> then end
 		if args.something == 789 then end
 		if args:Bar(789) then end
+		if foo == 123 then end
+		if <!foo == 456!> then end 
 	end
 ]]
 
