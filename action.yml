@@ -5,6 +5,9 @@ branding:
   color: yellow
 
 inputs:
+  extra-args:
+    description: "Extra parameters passed to LuaLS"
+    default: ""
   luals-repo:
     description: "Where to clone lua-language-server from"
     default: LuaLS/lua-language-server
@@ -83,7 +86,8 @@ runs:
           --configpath "${{ github.workspace }}/luals-config/Check-Config.lua" \
           --dbm_libraries "$libs" \
           --trust_all_plugins \
-          --check "${{ inputs.luals-check-dir }}"
+          --check "${{ inputs.luals-check-dir }}" \
+          ${{ inputs.extra-args }}
         STATUS=0
         if [[ -e log/check.json ]] ; then
           STATUS=1
