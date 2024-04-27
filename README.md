@@ -42,7 +42,7 @@ Includes support for combat log sub-events and DBM-specific events like `_UNFILT
 ## Setup for development
 
 1. Install [Visual Studio Code](https://code.visualstudio.com/)
-2. Install the [lua-language-server extension](https://marketplace.visualstudio.com/items?itemName=sumneko.lua) for VS Code (Note: currently needs a patched version, see first FAQ entry below)
+2. Install the [lua-language-server extension](https://marketplace.visualstudio.com/items?itemName=sumneko.lua) for VS Code
 3. Install the [WoW API extension](https://marketplace.visualstudio.com/items?itemName=ketho.wow-api) for VS Code
 4. Clone this repo: `git clone git@github.com:DeadlyBossMods/LuaLS-Config`
 5. Open VS Code's settings.json (`Cmd+Shift+P` -> "Open User Settings (JSON)")
@@ -51,7 +51,8 @@ Includes support for combat log sub-events and DBM-specific events like `_UNFILT
 7. Add extra definitions for DBM to settings.json
 	1. Find the `Lua.workspace.library` entry, it should already exist and have entries from the WoW API extension
 	2. Add this line to the library array: `<path to where you cloned LuaLS-Config>/Definitions`
-	3. Add this line to the library array: `<path to where you cloned the DBM-Unified repo>`
+	3. Add this line to the library array: `<path to where you cloned the main DeadlyBossMods repo>/DBM-Core`
+	3. Add this line to the library array: `<path to where you cloned the main DeadlyBossMods repo>/DBM-StatusBarTimers`
 
 Your settings.json should look like this afterwards:
 
@@ -60,8 +61,8 @@ Your settings.json should look like this afterwards:
 		"C:/Users/You/wow-addons/DeadlyBossMods/DBM-Core",
 		"C:/Users/You/wow-addons/DeadlyBossMods/DBM-StatusBarTimers",
 		"C:/Users/You/wow-addons/LuaLS-Config/Definitions",
-		"c:\\Users\\You\\.vscode\\extensions\\ketho.wow-api-0.13.2\\EmmyLua\\API",
-		"c:\\Users\\You\\.vscode\\extensions\\ketho.wow-api-0.13.2\\EmmyLua\\Optional"
+		"c:\\Users\\You\\.vscode\\extensions\\ketho.wow-api-0.13.x\\EmmyLua\\API",
+		"c:\\Users\\You\\.vscode\\extensions\\ketho.wow-api-0.13.x\\EmmyLua\\Optional"
 	],
 	"Lua.runtime.plugin": "C:/Users/You/wow-addons/LuaLS-Config/Plugin/Plugin.lua",
 ```
@@ -75,6 +76,7 @@ Your settings.json should look like this afterwards:
 	--checklevel Information \
 	--configpath <path to this repository>/Check-Config.lua \
 	--dbm_libraries <path to github.com/DeadlyBossMods/DeadlyBossMods>/DBM-Core,<path to github.com/DeadlyBossMods/DeadlyBossMods>/DBM-StatusBarTimers,<Path to github.com/Ketho/vscode-wow-api>/EmmyLua \
+	--trust_all_plugins \
 	--check <workspace path of whatever DBM mod you want to check>
 ```
 
@@ -89,10 +91,7 @@ Another solution would be one huge monorepo for all of DBM, but that would requi
 
 Check if the plugin is being loaded correctly, it will output "Loaded DBM (...)" messages to the LuaLS log (Output -> Lua in VS Code) on startup.
 
-Make sure that your LuaLS installation is new enough to contain [LuaLS/lua-language-server#2502](https://github.com/LuaLS/lua-language-server/pull/2502).
-
-As of today (version 3.7.4) that means you will need to run LuaLS from HEAD.
-A hacky quick way to install a patched version is to just take the whole `script/` folder from my branch and copy it into the VS Code extension at `$HOME/.vscode/extensions/sumneko.lua-XYZ/server/script`.
+Make sure that your LuaLS installation is version 3.8 or newer.
 
 ### Why do we need a plugin?
 
