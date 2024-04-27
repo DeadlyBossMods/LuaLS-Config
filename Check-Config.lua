@@ -45,31 +45,6 @@ if f then
 	f:close()
 end
 
--- Add ourselves to the list of trusted plugins
--- At first glance this may be a bit surprising that this is possible, but we are already executing code,
--- so I guess the safety check has no meaning anyways if the user opts to run a Lua config file
-local trustedPluginsPath = fs.path(LOGPATH) / "TRUSTED"
-local trustedPluginsFile, err = io.open(trustedPluginsPath:string(), "a+")
-if not trustedPluginsFile then
-	error("Could not write to TRUSTED file: " .. err)
-end
-local found = false
-local empty = true
-for line in trustedPluginsFile:lines() do
-	empty = false
-	if line == pluginPath then
-		found = true
-		break
-	end
-end
-if not found then
-	if not empty then
-		trustedPluginsFile:write("\n")
-	end
-	trustedPluginsFile:write(pluginPath)
-end
-trustedPluginsFile:close()
-
 local disabledDiagnostics = {
 	"unused-local", -- Very spammy and low value
 	"redefined-local", -- Low value
