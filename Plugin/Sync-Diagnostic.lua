@@ -31,8 +31,8 @@ local function analyzeMod(modVars, ast, callback)
 					end
 				end
 			end
-			if methodNode and methodNode.type == "getmethod" and methodName == "SendSync" then
-				local arg = methodNode.parent.args[2]
+			if methodNode and methodNode.type == "getmethod" and (methodName == "SendSync" or methodName == "SendThrottledSync") then
+				local arg = (methodName == "SendThrottledSync") and methodNode.parent.args[3] or methodNode.parent.args[2]
 				if arg and arg.type == "string" then
 					syncsSent[guide.getLiteral(arg)] = arg
 				end
