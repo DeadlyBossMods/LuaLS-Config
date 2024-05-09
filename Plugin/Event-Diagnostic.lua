@@ -392,4 +392,6 @@ end
 
 diagnostics:New("dbm-event-checker", eventDiagnostic)
 
-print("Loaded DBM event checker diagnostic")
+if not QUIET then
+	print("Loaded DBM event checker diagnostic")
+end

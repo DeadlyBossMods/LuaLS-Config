@@ -82,6 +82,8 @@ function plugin:OnTransformAst(uri, ast)
 	end)
 end
 
-print("Loaded DBM mod classes plugin")
+if not QUIET then
+	print("Loaded DBM mod classes plugin")
+end
 
 return plugin

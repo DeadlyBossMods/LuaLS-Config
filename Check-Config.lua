@@ -17,7 +17,7 @@ libs[#libs + 1] = (basePath / "Definitions"):string()
 
 -- Merge global definitions from various places
 local globals = {}
-local ws = fs.path(CHECK)
+local ws = fs.path(CHECK or CHECK_WORKER)
 
 -- Handle .luacheckrc
 local luacheckCfg = ws / ".luacheckrc"

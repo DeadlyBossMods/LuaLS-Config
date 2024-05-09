@@ -81,4 +81,6 @@ end
 
 diagnostics:New("dbm-sync-checker", syncDiagnostic)
 
-print("Loaded DBM sync checker diagnostic")
+if not QUIET then
+	print("Loaded DBM sync checker diagnostic")
+end
