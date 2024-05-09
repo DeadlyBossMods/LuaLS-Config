@@ -52,7 +52,8 @@ Includes support for combat log sub-events and DBM-specific events like `_UNFILT
 	1. Find the `Lua.workspace.library` entry, it should already exist and have entries from the WoW API extension
 	2. Add this line to the library array: `<path to where you cloned LuaLS-Config>/Definitions`
 	3. Add this line to the library array: `<path to where you cloned the main DeadlyBossMods repo>/DBM-Core`
-	3. Add this line to the library array: `<path to where you cloned the main DeadlyBossMods repo>/DBM-StatusBarTimers`
+	4. Add this line to the library array: `<path to where you cloned the main DeadlyBossMods repo>/DBM-StatusBarTimers`
+	5. Add this line to the library array: `<path to where you cloned the main DeadlyBossMods repo>/DBM-Test`
 
 Your settings.json should look like this afterwards:
 
@@ -60,6 +61,7 @@ Your settings.json should look like this afterwards:
 	"Lua.workspace.library": [
 		"C:/Users/You/wow-addons/DeadlyBossMods/DBM-Core",
 		"C:/Users/You/wow-addons/DeadlyBossMods/DBM-StatusBarTimers",
+		"C:/Users/You/wow-addons/DeadlyBossMods/DBM-Test",
 		"C:/Users/You/wow-addons/LuaLS-Config/Definitions",
 		"c:\\Users\\You\\.vscode\\extensions\\ketho.wow-api-0.13.x\\EmmyLua\\API",
 		"c:\\Users\\You\\.vscode\\extensions\\ketho.wow-api-0.13.x\\EmmyLua\\Optional"
@@ -75,7 +77,7 @@ Your settings.json should look like this afterwards:
 ./bin/lua-language-server \
 	--checklevel Information \
 	--configpath <path to this repository>/Check-Config.lua \
-	--dbm_libraries <path to github.com/DeadlyBossMods/DeadlyBossMods>/DBM-Core,<path to github.com/DeadlyBossMods/DeadlyBossMods>/DBM-StatusBarTimers,<Path to github.com/Ketho/vscode-wow-api>/EmmyLua \
+	--dbm_libraries <path to github.com/DeadlyBossMods/DeadlyBossMods>/DBM-Core,<path to github.com/DeadlyBossMods/DeadlyBossMods>/DBM-StatusBarTimers,<path to github.com/DeadlyBossMods/DeadlyBossMods>/DBM-Test,<Path to github.com/Ketho/vscode-wow-api>/EmmyLua \
 	--trust_all_plugins \
 	--check <workspace path of whatever DBM mod you want to check>
 ```
