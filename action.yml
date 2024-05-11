@@ -88,11 +88,12 @@ runs:
           --trust_all_plugins \
           --check "${{ inputs.luals-check-dir }}" \
           ${{ inputs.extra-args }}
+        # LuaLS >= 3.9 always writes check.json, older ones only on error, normalize to 3.9 behavior
+        touch log/check.json
         STATUS=0
-        if [[ -e log/check.json ]] ; then
+        if [[ $(wc -l < log/check.json) > 0 ]] ; then
           STATUS=1
         fi
-        touch log/check.json
         # Warnings as readable outsputs because GitHub doesn't show any metadata in the log when emitting annotations and limits annotations to 10 or so
         cat ${{ github.workspace }}/luals/log/check.json | \
           jq -r 'to_entries | map(.key as $file | .value[] | {file: $file | sub("file://${{ github.workspace }}/workspace/"; ""), title: .code, line: .range.start.line, endLine: .range.end.line, col: .range.start.character, endColumn: .range.end.character, message: .message, level: (if .severity <= 1 then "Error" else "Warning" end)}) | map("\(.level): \(.file):\(.line+1):\(.col+1) \(.title) - \(.message)") | .[]' \
