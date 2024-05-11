@@ -17,6 +17,7 @@ libs[#libs + 1] = (basePath / "Definitions"):string()
 
 -- Merge global definitions from various places
 local globals = {}
+local globalsRegex = nil
 local ws = fs.path(CHECK or CHECK_WORKER)
 
 -- Handle .luacheckrc
@@ -42,6 +43,7 @@ if f then
 			globals[#globals + 1] = v
 		end
 	end
+	globalsRegex = config["diagnostics.globalsRegex"]
 	f:close()
 end
 
@@ -77,6 +79,7 @@ return {
 	["Lua.runtime.version"] = "Lua 5.1",
 	["Lua.runtime.plugin"] = pluginPath,
 	["Lua.diagnostics.globals"] = globals,
+	["Lua.diagnostics.globalsRegex"] = globalsRegex,
 	["Lua.diagnostics.disable"] = disabledDiagnostics,
 	["Lua.diagnostics.neededFileStatus"] = {
 		["global-element"] = "Any" -- Bans defining global variables, even if they are all uppercase (consistent with LuaCheck)
