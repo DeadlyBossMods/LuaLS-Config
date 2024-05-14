@@ -53,6 +53,9 @@ function PlayMusic(musicID) end
 ---@return string subMode
 function GetLFGMode(category, lfgID) end
 
+---Currently missing from WoW API globals, returns Constants.TimerunningConsts value for currently active seasonID
+---@return number seasonID
+function PlayerGetTimerunningSeasonID() end
 
 ---@class TimerTracker
 TimerTracker = nil
