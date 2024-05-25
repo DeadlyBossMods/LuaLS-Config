@@ -122,3 +122,11 @@ STATICPOPUP_NUMDIALOGS = nil
 ---@overload fun(): ... any
 ---@return any ... Current CLEU args.
 function CombatLogGetCurrentEventInfo() end
+
+---@class FontString
+local FontString = {}
+
+---[Documentation](https://warcraft.wiki.gg/wiki/API_FontString_SetFormattedText)
+---@param text string
+---@param ... any
+function FontString:SetFormattedText(text, ...) end
