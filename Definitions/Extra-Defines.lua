@@ -123,6 +123,8 @@ STATICPOPUP_NUMDIALOGS = nil
 ---@return any ... Current CLEU args.
 function CombatLogGetCurrentEventInfo() end
 
+function HandleLuaError(errorMessage) end
+
 ---@class FontString
 local FontString = {}
 
