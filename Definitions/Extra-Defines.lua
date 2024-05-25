@@ -119,6 +119,6 @@ StaticPopupDialogs = nil
 ---@type number
 STATICPOPUP_NUMDIALOGS = nil
 
----@overlooad fun(): ... any
+---@overload fun(): ... any
 ---@return any ... Current CLEU args.
 function CombatLogGetCurrentEventInfo() end
