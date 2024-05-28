@@ -57,10 +57,6 @@ function GetLFGMode(category, lfgID) end
 ---@return number seasonID
 function PlayerGetTimerunningSeasonID() end
 
----Currently missing from WoW API globals, returns index of current spec
----@return number specIndex
-function GetPrimaryTalentTree() end
-
 ---@class TimerTracker
 TimerTracker = nil
 TimerTracker.timerList = {}
