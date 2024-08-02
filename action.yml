@@ -78,7 +78,7 @@ runs:
         if [[ -d "${{ inputs.luals-check-dir }}/DBM-Core" ]]; then
           libs="${{ inputs.luals-check-dir }}/DBM-Core,${{ inputs.luals-check-dir }}/DBM-StatusBarTimers,${{ inputs.luals-check-dir }}/DBM-Test,${{ github.workspace }}/vscode-wow-api/Annotations"
         else
-          libs="${{ github.workspace }}/DBM-Main-Repo/DBM-Core,${{ github.workspace }}/DBM-Main-Repo/DBM-StatusBarTimers,${{ github.workspace }}/DBM-Main-Repo/DBM-Test,${{ github.workspace }}/vscode-wow-api/EmmyLua"
+          libs="${{ github.workspace }}/DBM-Main-Repo/DBM-Core,${{ github.workspace }}/DBM-Main-Repo/DBM-StatusBarTimers,${{ github.workspace }}/DBM-Main-Repo/DBM-Test,${{ github.workspace }}/vscode-wow-api/Annotations"
         fi
         rm -f log/check.json
         ./bin/lua-language-server \
