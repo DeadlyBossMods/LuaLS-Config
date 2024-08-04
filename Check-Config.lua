@@ -84,8 +84,14 @@ return {
 	["Lua.diagnostics.neededFileStatus"] = {
 		["global-element"] = "Any" -- Bans defining global variables, even if they are all uppercase (consistent with LuaCheck)
 	},
-	["Lua.diagnostics.severity"]  = {
+	["Lua.diagnostics.severity"] = {
 		["undefined-global"] = "Error",
 		["lowercase-global"] = "Error",
+	},
+	["Lua.workspace.ignoreDir"] = {
+		"DBM-Test-Dragonflight",
+		"DBM-Test-WarWithin",
+		"DBM-Test-Vanilla",
+		"DBM-Test-Dungeons"
 	}
 }
