@@ -69,6 +69,7 @@ runs:
       with:
         repository: Ketho/vscode-wow-api
         path: ./vscode-wow-api
+        ref: 0.17.4
     - name: Run checks
       shell: bash
       run: |
