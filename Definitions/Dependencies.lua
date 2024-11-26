@@ -25,3 +25,9 @@ function LibDropDownMenu:ToggleDropDownMenu(level, value, dropDownFrame, anchorN
 ---@class DropdownMenu
 ---@return DropdownMenu
 function LibDropDownMenu:Create_DropDownMenu(name, parent) end
+
+---@class ChatThrottleLib
+ChatThrottleLib = {}
+function ChatThrottleLib:SendAddonMessage(prio, prefix, text, chattype, target, queueName, callbackFn, callbackArg) end
+function ChatThrottleLib:SendAddonMessageLogged(prio, prefix, text, chattype, target, queueName, callbackFn, callbackArg) end
+function ChatThrottleLib:BNSendGameData(prio, prefix, text, chattype, gameAccountID, queueName, callbackFn, callbackArg) end
