@@ -13,7 +13,7 @@ inputs:
     default: LuaLS/lua-language-server
   luals-ref:
     description: "Which branch, tag, or commit to use for LuaLS"
-    default: "3.13.2"
+    default: "3.13.3"
   luals-check-dir:
     description: "Directory to check"
     required: true
