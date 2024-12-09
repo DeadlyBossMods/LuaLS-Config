@@ -28,7 +28,7 @@ Enum.SeasonID = {
 	Hardcore          = 3,
 }
 --- SeasonID as string, useful as a parameter to avoid having to nil-check every Enum.SeasonID access in functions that take a season as parameter.
----@alias SeasonID "NoSeason" | "SeasonOfMastery" | "SeasonOfDiscovery" | "Hardcore"
+---@alias SeasonID "NoSeason" | "SeasonOfMastery" | "SeasonOfDiscovery" | "Hardcore" | "FreshHardcore" | "Fresh"
 
 --- [Documentation](https://warcraft.wiki.gg/wiki/API_C_Seasons.GetActiveSeason)
 --- Only available in Classic.
