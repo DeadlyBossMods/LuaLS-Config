@@ -33,6 +33,7 @@ function GetTalentTabInfo(index, isInspect, isPet, talentGroup) end
 
 ---@type number
 MAX_TALENT_TABS = nil
+ALTERNATE_POWER_INDEX = 10
 
 
 -- WoWLua definition is missing return value
