@@ -13,7 +13,7 @@ inputs:
     default: LuaLS/lua-language-server
   luals-ref:
     description: "Which branch, tag, or commit to use for LuaLS"
-    default: "3.13.3"
+    default: "3.13.5"
   luals-check-dir:
     description: "Directory to check"
     required: true
@@ -69,7 +69,7 @@ runs:
       with:
         repository: Ketho/vscode-wow-api
         path: ./vscode-wow-api
-        ref: 0.18.0
+        ref: 0.18.2
     - name: Run checks
       shell: bash
       run: |
