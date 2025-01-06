@@ -118,6 +118,10 @@ function StaticPopup_Show(id) end
 ---@param id string
 function StaticPopup_Hide(id) end
 
+---@param tooltip any
+---@param text string
+function GameTooltip_SetTitle(tooltip, text) end
+
 ---@type table<string, table>
 StaticPopupDialogs = nil
 
