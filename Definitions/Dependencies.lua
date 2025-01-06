@@ -24,4 +24,4 @@ function LibDropDownMenu.UIDropDownMenu_Initialize(frame, initFunction, displayM
 function LibDropDownMenu.ToggleDropDownMenu(level, value, dropDownFrame, anchorName, xOffset, yOffset, menuList, button, autoHideDelay, overrideDisplayMode) end
 ---@class DropdownMenu
 ---@return DropdownMenu
-function LibDropDownMenu.Create_DropDownMenu(name, parent) end
+function LibDropDownMenu.Create_DropDownMenu(name, parent, opts) end
