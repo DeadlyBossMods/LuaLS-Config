@@ -74,6 +74,7 @@ function FreeTimerTrackerTimer(tracker) end
 ---@param ... any
 function TimerTracker_OnEvent(self, event, ...) end
 
+---@type frame
 ---@class ColorPickerFrame
 ColorPickerFrame = nil
 
