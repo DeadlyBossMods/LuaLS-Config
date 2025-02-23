@@ -74,6 +74,9 @@ function FreeTimerTrackerTimer(tracker) end
 ---@param ... any
 function TimerTracker_OnEvent(self, event, ...) end
 
+---@type frame
+ColorPickerFrame = nil
+
 -- Weird locale selectors we use during startup instead of GetLocale() for some reason.
 ---@type number?
 LOCALE_koKR = nil
