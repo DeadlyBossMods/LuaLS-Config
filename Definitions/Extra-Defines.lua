@@ -74,8 +74,21 @@ function FreeTimerTrackerTimer(tracker) end
 ---@param ... any
 function TimerTracker_OnEvent(self, event, ...) end
 
----@type frame
+---@class ColorPickerFrame
 ColorPickerFrame = nil
+
+---@param stuff table
+function ColorPickerFrame:SetupColorPickerAndShow(stuff) end
+
+---@return number r
+---@return number g
+---@return number b
+function ColorPickerFrame:GetColorRGB() end
+
+---@param rgbR number
+---@param rgbG number
+---@param rgbB number
+function ColorPickerFrame:SetColorRGB(rgbR, rgbG, rgbB) end
 
 -- Weird locale selectors we use during startup instead of GetLocale() for some reason.
 ---@type number?
