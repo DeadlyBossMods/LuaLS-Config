@@ -83,7 +83,7 @@ end
 function util.FindSelfReferences(varNode, callback)
 	for _, node in ipairs(varNode.ref or {}) do
 		local funcNode
-		if node.parent.type == "setmethod" or node.parent.type == "setfield" then
+		if node.parent.type == "setmethod" or node.parent.type == "setfield" and node.parent.value then
 			local funcNode
 			if node.parent.value.type == "function" then
 				funcNode = node.parent.value
