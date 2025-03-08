@@ -92,6 +92,7 @@ return {
 		"DBM-Test-Dragonflight",
 		"DBM-Test-WarWithin",
 		"DBM-Test-Vanilla",
-		"DBM-Test-Dungeons"
+		"DBM-Test-Dungeons",
+		"DBM-Core/Libs",
 	}
 }
