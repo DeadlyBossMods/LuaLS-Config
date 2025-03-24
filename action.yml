@@ -10,10 +10,10 @@ inputs:
     default: ""
   luals-repo:
     description: "Where to clone lua-language-server from"
-    default: LuaLS/lua-language-server
+    default: emmericp/lua-language-server
   luals-ref:
     description: "Which branch, tag, or commit to use for LuaLS"
-    default: "3.13.9"
+    default: "3.13.9-revert-canonical-dir"
   luals-check-dir:
     description: "Directory to check"
     required: true
