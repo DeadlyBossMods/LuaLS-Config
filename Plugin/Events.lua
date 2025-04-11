@@ -76,6 +76,8 @@ events.NoArgsTableEvents = {
 	SPELL_DRAIN = true,
 	SPELL_LEECH = true,
 	SPELL_CAST_FAILED = true,
+	DAMAGE_SHIELD = true,
+	DAMAGE_SHIELD_MISSED = true
 }
 
 events.ArgTableEvents = {}

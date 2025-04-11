@@ -284,7 +284,7 @@ local function checkEvent(event, node, callback)
 			}
 		end
 	elseif events.ArgTableEvents[eventName] or events.NoArgsTableEvents[eventName] then
-		if eventName:match("^SPELL_") or eventName:match("^RANGE_") then
+		if eventName:match("^SPELL_") or eventName:match("^RANGE_") or eventName == "DAMAGE_SHIELD" or eventName == "DAMAGE_SHIELD_MISSED" then
 			for _, arg in ipairs(event.args) do
 				if type(arg) ~= "number" then
 					callback{
@@ -298,7 +298,7 @@ local function checkEvent(event, node, callback)
 			callback{
 				start = node.start,
 				finish = node.finish,
-				message = "Only SPELL_ and RANGE_ combat log events take parameters."
+				message = "Only SPELL_, RANGE_, and DAMAGE_SHIELD[_MISSED] combat log events take parameters."
 			}
 		end
 	else
