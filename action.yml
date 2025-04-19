@@ -70,6 +70,7 @@ runs:
         repository: Ketho/vscode-wow-api
         path: ./vscode-wow-api
         ref: 0.20.6
+        submodules: true
     - name: Run checks
       shell: bash
       run: |
