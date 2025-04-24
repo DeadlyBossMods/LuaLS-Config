@@ -35,6 +35,9 @@ function GetTalentTabInfo(index, isInspect, isPet, talentGroup) end
 MAX_TALENT_TABS = nil
 ALTERNATE_POWER_INDEX = 10
 
+---@type number
+WOW_PROJECT_MISTS_CLASSIC = nil
+
 
 -- WoWLua definition is missing return value
 ---[Documentation](https://warcraft.wiki.gg/wiki/API_C_NamePlate.GetNamePlates)
