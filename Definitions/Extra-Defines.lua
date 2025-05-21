@@ -137,6 +137,9 @@ PLAYER_DIFFICULTY_STORY_RAID = nil
 ---@type string
 SCENARIO_STAGE = nil
 
+---@type string
+RUNES = nil
+
 ---@overload fun(): ... any
 ---@return any ... Current CLEU args.
 function CombatLogGetCurrentEventInfo() end
