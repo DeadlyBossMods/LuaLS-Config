@@ -217,7 +217,7 @@ local function findRegisteredEvents(varNode, events, callback)
 	for _, ref in ipairs(varNode.ref) do
 		local getMethodNode = ref.parent
 		local methodName = guide.getKeyName(getMethodNode)
-		if getMethodNode.type == "getmethod" and (methodName == "RegisterEvents" or methodName == "RegisterEventsInCombat" or methodName == "RegisterShortTermEvents") then
+		if getMethodNode.type == "getmethod" and (methodName == "RegisterEvents" or methodName == "RegisterEventsInCombat" or methodName == "RegisterShortTermEvents" or methodName == "RegisterSafeEvents" or methodName == "RegisterSafeEventsInCombat") then
 			local callNode = getMethodNode.parent
 			if callNode.type == "call" then
 				for _, argNode in ipairs(callNode.args) do
@@ -225,7 +225,7 @@ local function findRegisteredEvents(varNode, events, callback)
 						---@class ParsedDBMEvent
 						local event = parseEventString(guide.getKeyName(argNode))
 						event.node = argNode
-						event.inCombatOnly = methodName == "RegisterEventsInCombat"
+						event.inCombatOnly = methodName == "RegisterEventsInCombat" or methodName == "RegisterSafeEventsInCombat"
 						event.shortTerm = methodName == "RegisterShortTermEvents"
 						events[#events + 1] = event
 					elseif argNode.type ~= "self" then
