@@ -153,3 +153,9 @@ local FontString = {}
 ---@param text string
 ---@param ... any
 function FontString:SetFormattedText(text, ...) end
+
+---@type frame
+EncounterTimeline.TrackView = nil
+
+---@type frame
+EncounterTimeline.TimerView = nil
