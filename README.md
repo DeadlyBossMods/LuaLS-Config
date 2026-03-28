@@ -58,14 +58,14 @@ Includes support for combat log sub-events and DBM-specific events like `_UNFILT
 Your settings.json should look like this afterwards:
 
 ```
-	"Lua.workspace.library": [
-		"C:/Users/You/wow-addons/DeadlyBossMods/DBM-Core",
-		"C:/Users/You/wow-addons/DeadlyBossMods/DBM-StatusBarTimers",
-		"C:/Users/You/wow-addons/DeadlyBossMods/DBM-Test",
-		"C:/Users/You/wow-addons/LuaLS-Config/Definitions",
-		"c:\\Users\\You\\.vscode\\extensions\\ketho.wow-api-0.13.x\\EmmyLua\\API",
-		"c:\\Users\\You\\.vscode\\extensions\\ketho.wow-api-0.13.x\\EmmyLua\\Optional"
-	],
+		"Lua.workspace.library": [
+			"/Users/myst/Documents/Source Codes/DBM Projects/DBM-Retail/DBM-Core/",
+			"/Users/myst/Documents/Source Codes/DBM Projects/DBM-Retail/DBM-StatusBarTimers/",
+			"/Users/myst/Documents/Source Codes/DBM Projects/DBM-Retail/DBM-Test/",
+			"/Users/myst/Documents/Source Codes/LuaLS-Config/Definitions",
+			"~/.vscode/extensions/ketho.wow-api-0.22.3/Annotations/Core",
+			"~/.vscode/extensions/ketho.wow-api-0.22.3/Annotations/FrameXML"
+		],
 	"Lua.runtime.plugin": "C:/Users/You/wow-addons/LuaLS-Config/Plugin/Plugin.lua",
 ```
 
