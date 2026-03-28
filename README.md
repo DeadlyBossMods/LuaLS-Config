@@ -59,10 +59,10 @@ Your settings.json should look like this afterwards:
 
 ```
 		"Lua.workspace.library": [
-			"/Users/myst/Documents/Source Codes/DBM Projects/DBM-Retail/DBM-Core/",
-			"/Users/myst/Documents/Source Codes/DBM Projects/DBM-Retail/DBM-StatusBarTimers/",
-			"/Users/myst/Documents/Source Codes/DBM Projects/DBM-Retail/DBM-Test/",
-			"/Users/myst/Documents/Source Codes/LuaLS-Config/Definitions",
+			"/Users/YourUserFolder/FolderPathToFiles/DBM-Core/",
+			"/Users/YourUserFolder/FolderPathToFiles/DBM-StatusBarTimers/",
+			"/Users/YourUserFolder/FolderPathToFiles/DBM-Test/",
+			"/Users/YourUserFolder/FolderPathToFiles/LuaLS-Config/Definitions",
 			"~/.vscode/extensions/ketho.wow-api-0.22.3/Annotations/Core",
 			"~/.vscode/extensions/ketho.wow-api-0.22.3/Annotations/FrameXML"
 		],
