@@ -23,7 +23,7 @@ runs:
   steps:
     - name: Cache LuaLS
       id: cache-luals
-      uses: actions/cache@v4
+      uses: actions/cache@v5
       env:
         cache-name: luals
       with:
@@ -38,7 +38,7 @@ runs:
         sudo apt-get install -y ninja-build
     - if: ${{ steps.cache-luals.outputs.cache-hit != 'true' }}
       name: Checkout LuaLS
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         repository: ${{ inputs.luals-repo }}
         ref: ${{ inputs.luals-ref }}
@@ -55,17 +55,17 @@ runs:
         ./3rd/luamake/luamake -notest rebuild
         rm -rf test # reduces cache size by ~40%
     - name: Checkout LuaLS config
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         repository: DeadlyBossMods/LuaLS-Config
         path: ./luals-config
     - name: Checkout DBM main repo
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         repository: DeadlyBossMods/DeadlyBossMods
         path: ./DBM-Main-Repo
     - name: Checkout vscode-wow-api
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         repository: Ketho/vscode-wow-api
         path: ./vscode-wow-api
