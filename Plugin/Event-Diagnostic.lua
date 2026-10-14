@@ -220,7 +220,7 @@ local function findRegisteredEvents(varNode, events, callback)
 		if getMethodNode.type == "getmethod" and (methodName == "RegisterEvents" or methodName == "RegisterEventsInCombat" or methodName == "RegisterShortTermEvents" or methodName == "RegisterSafeEvents" or methodName == "RegisterSafeEventsInCombat") then
 			local callNode = getMethodNode.parent
 			if callNode.type == "call" then
-				for _, argNode in ipairs(callNode.args) do
+				for index, argNode in ipairs(callNode.args) do
 					if argNode.type == "string" then
 						---@class ParsedDBMEvent
 						local event = parseEventString(guide.getKeyName(argNode))
@@ -228,7 +228,7 @@ local function findRegisteredEvents(varNode, events, callback)
 						event.inCombatOnly = methodName == "RegisterEventsInCombat" or methodName == "RegisterSafeEventsInCombat"
 						event.shortTerm = methodName == "RegisterShortTermEvents"
 						events[#events + 1] = event
-					elseif argNode.type ~= "self" then
+					elseif argNode.type ~= "self" and not (methodName == "RegisterShortTermEvents" and index == 2 and argNode.type == "boolean") then
 						-- We could resolve some other commonly used parameters here, but looks like all existing mods just pass string literals here
 						callback{
 							start = argNode.start,
