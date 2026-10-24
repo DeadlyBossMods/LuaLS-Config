@@ -53,7 +53,6 @@ Includes support for combat log sub-events and DBM-specific events like `_UNFILT
 	2. Add this line to the library array: `<path to where you cloned LuaLS-Config>/Definitions`
 	3. Add this line to the library array: `<path to where you cloned the main DeadlyBossMods repo>/DBM-Core`
 	4. Add this line to the library array: `<path to where you cloned the main DeadlyBossMods repo>/DBM-StatusBarTimers`
-	5. Add this line to the library array: `<path to where you cloned the main DeadlyBossMods repo>/DBM-Test`
 
 Your settings.json should look like this afterwards:
 
@@ -61,7 +60,6 @@ Your settings.json should look like this afterwards:
 		"Lua.workspace.library": [
 			"/Users/YourUserFolder/FolderPathToFiles/DBM-Core/",
 			"/Users/YourUserFolder/FolderPathToFiles/DBM-StatusBarTimers/",
-			"/Users/YourUserFolder/FolderPathToFiles/DBM-Test/",
 			"/Users/YourUserFolder/FolderPathToFiles/LuaLS-Config/Definitions",
 			"~/.vscode/extensions/ketho.wow-api-0.22.3/Annotations/Core",
 			"~/.vscode/extensions/ketho.wow-api-0.22.3/Annotations/FrameXML"
